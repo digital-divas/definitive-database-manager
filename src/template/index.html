@@ -2,11 +2,13 @@
 <meta charset="UTF-8">
 
 <head>
-    <link rel="stylesheet" href="bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
-    <script src="jquery-3.2.1.slim.min.js"></script>
-    <script src="popper.min.js"></script>
-    <script src="bootstrap.min.js"></script>
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
+    <script src="bootstrap/jquery-3.2.1.slim.min.js"></script>
+    <script src="bootstrap/popper.min.js"></script>
+    <script src="bootstrap/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="bootstrap-treeview/bootstrap-treeview.min.css">
+    <script src="bootstrap-treeview/bootstrap-treeview.min.js"></script>
 
     <link rel="stylesheet" href="codemirror/codemirror.css" />
     <script src="codemirror/codemirror.js"></script>
@@ -15,21 +17,17 @@
     <link rel="stylesheet" href="codemirror/show-hint.css" />
     <script src="codemirror/show-hint.js"></script>
     <script src="codemirror/sql-hint.js"></script>
-    <style>
-        .CodeMirror {
-            border-top: 1px solid black;
-            border-bottom: 1px solid black;
-            height: 100%;
-        }
-    </style>
+
+    <link rel="stylesheet" href="styles.css">
+    <script src="index.js"></script>
 
     <title>Definite Database Manager</title>
 </head>
 
 <body class="full-content">
     <div class="row query-area margin-0">
-        <div class="col-sm-3 hotpink-background">
-            hello
+        <div class="col-sm-3 padding-0 connections-area">
+            <div id="connections"></div>
         </div>
         <div class="col-sm-9 red-background padding-0">
             <textarea id="code" name="code">-- SQL Mode for CodeMirror
@@ -84,39 +82,5 @@ SELECT SQL_NO_CACHE DISTINCT
         </div>
     </div>
 </body>
-
-<script>
-    window.onload = function () {
-        var mime = 'text/x-mariadb';
-
-        // 'text/x-sql'
-        // 'text/x-mysql'
-        // 'text/x-mariadb'
-        // 'text/x-cassandra'
-        // 'text/x-plsql'
-        // 'text/x-mssql'
-        // 'text/x-hive'
-        // 'text/x-pgsql'
-        // 'text/x-gql'
-        // 'text/x-gpsql'
-        // 'text/x-esper'
-
-        window.editor = CodeMirror.fromTextArea(document.getElementById('code'), {
-            mode: mime,
-            indentWithTabs: true,
-            smartIndent: true,
-            lineNumbers: true,
-            matchBrackets: true,
-            autofocus: true,
-            extraKeys: { "Ctrl-Space": "autocomplete" },
-            hintOptions: {
-                tables: {
-                    users: ["name", "score", "birthDate"],
-                    countries: ["name", "population", "size"]
-                }
-            }
-        });
-    };
-</script>
 
 </html>
