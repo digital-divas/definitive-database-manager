@@ -14,5 +14,17 @@
 }
 
 .query-area {
-    height: 60%;
+    height: 65%;
+}
+
+.results-area {
+    height: 35%;
+}
+
+.table-background {
+    background-color: #212529;
+}
+
+.margin-0 {
+    margin: 0px;
 }
