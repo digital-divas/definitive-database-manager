@@ -1,6 +1,6 @@
 # definitive-database-manager
 
-<img src="readme-assets/basic-interface.png"></img>
+<img src="documentation/readme-assets/basic-interface.png"></img>
 
 https://github.com/ultralight-ux/Ultralight
 
