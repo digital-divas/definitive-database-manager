@@ -6,10 +6,19 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set (ULTRALIGHT ${CMAKE_SOURCE_DIR}/lib/ultralight)
 
+
 if(WIN32)
 	set (ULTRALIGHT_BINS ${ULTRALIGHT}/windows/x64-Debug/bin)
 	set (ULTRALIGHT_LIBS ${ULTRALIGHT}/windows/x64-Debug/lib)
 endif(WIN32)
+
+if(UNIX)
+  set (ULTRALIGHT_BINS ${ULTRALIGHT}/lib)
+  set (ULTRALIGHT_LIBS ${ULTRALIGHT}/lib)
+endif(UNIX)
+
+
+message("${ULTRALIGHT_BINS} ${ULTRALIGHT_LIBS}")
 
 link_directories (${ULTRALIGHT_LIBS})
 include_directories(${ULTRALIGHT}/include)
