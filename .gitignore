@@ -34,5 +34,5 @@
 # VSCode build stuff
 out/
 .vs/
-
+.vscode/
 build/
