@@ -13,8 +13,8 @@ if(WIN32)
 endif(WIN32)
 
 if(UNIX)
-  set (ULTRALIGHT_BINS ${ULTRALIGHT}/lib)
-  set (ULTRALIGHT_LIBS ${ULTRALIGHT}/lib)
+  set (ULTRALIGHT_BINS ${ULTRALIGHT}/linux/bin)
+  set (ULTRALIGHT_LIBS ${ULTRALIGHT}/linux/lib)
 endif(UNIX)
 
 
@@ -29,6 +29,8 @@ link_libraries(UltralightCore Ultralight WebCore AppCore)
 add_executable (DefiniteDbManager WIN32 "main.cpp")
 
 add_custom_command(TARGET DefiniteDbManager POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory "${ULTRALIGHT_BINS}" $<TARGET_FILE_DIR:DefiniteDbManager>)
+add_custom_command(TARGET DefiniteDbManager POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory "${ULTRALIGHT_LIBS}" $<TARGET_FILE_DIR:DefiniteDbManager>)
+add_custom_command(TARGET DefiniteDbManager POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/src/template" "$<TARGET_FILE_DIR:DefiniteDbManager>/assets")
 
 if (MSVC)
   # Tell MSVC to use main instead of WinMain for Windows subsystem executables

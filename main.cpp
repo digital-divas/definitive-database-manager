@@ -2,45 +2,86 @@
 #include <AppCore/Window.h>
 #include <AppCore/Overlay.h>
 
-using namespace std;
+using namespace ultralight;
 
-int main() {
-	///
-	/// Create our main App instance.
-	///
-	auto app = ultralight::App::Create();
+class MyApp : public WindowListener
+{
+	RefPtr<App> app_;
+	RefPtr<Window> window_;
+	RefPtr<Overlay> overlay_;
+
+public:
+	MyApp()
+	{
+		///
+		/// Create our main App instance.
+		///
+		app_ = App::Create();
+
+		///
+		/// Create our Window with the Resizable window flag.
+		///
+		window_ = Window::Create(app_->main_monitor(), 1280, 800, false,
+								 kWindowFlags_Titled | kWindowFlags_Resizable);
+
+		///
+		/// Set our window title.
+		///
+		window_->SetTitle("Definitive Database Manager");
+
+		///
+		/// Bind our App's main window.
+		///
+		/// @note This MUST be done before creating any overlays or calling App::Run
+		///
+		app_->set_window(*window_.get());
+
+		///
+		/// Create our Overlay, use the same dimensions as our Window.
+		///
+		overlay_ = Overlay::Create(*window_.get(), window_->width(),
+								   window_->height(), 0, 0);
+
+		///
+		/// Load a string of HTML into our overlay's View
+		///
+		overlay_->view()->LoadURL("file:///index.html");
+
+		///
+		/// Register our MyApp instance as a WindowListener so we can handle the
+		/// Window's OnResize event below.
+		///
+		window_->set_listener(this);
+	}
+
+	virtual ~MyApp() {}
 
 	///
-	/// Create our Window using default window flags.
+	/// Inherited from WindowListener, not used.
 	///
-	auto window = ultralight::Window::Create(app->main_monitor(), 300, 300, false, ultralight::kWindowFlags_Titled);
+	virtual void OnClose() override {}
 
 	///
-	/// Set our window title.
+	/// Inherited from WindowListener, called when the Window is resized.
 	///
-	window->SetTitle("Definitive db");
+	virtual void OnResize(uint32_t width, uint32_t height) override
+	{
+		///
+		/// Resize our Overlay to match the new Window dimensions.
+		///
+		overlay_->Resize(width, height);
+	}
 
-	///
-	/// Bind our App's main window.
-	///
-	/// @note This MUST be done before creating any overlays or calling App::Run
-	///
-	app->set_window(window);
+	void Run()
+	{
+		app_->Run();
+	}
+};
 
-	///
-	/// Create our Overlay, use the same dimensions as our Window.
-	///
-	auto overlay = ultralight::Overlay::Create(window, window->width(), window->height(), 0, 0);
-
-	///
-	/// Load a string of HTML into our overlay's View
-	///
-	overlay->view()->LoadHTML("<center>welp</center>");
-
-	///
-	/// Run our main loop.
-	///
-	app->Run();
+int main()
+{
+	MyApp app;
+	app.Run();
 
 	return 0;
 }
